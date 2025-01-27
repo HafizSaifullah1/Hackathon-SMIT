@@ -10,16 +10,15 @@ App.use(cors("http://localhost:2000")); // Adjust your frontend URL here
 
 App.use('/auth', authRoute);
 
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log('Connected to MongoDB');
-  })
-  .catch((err) => {
-    console.error('Failed to connect to MongoDB', err);
-  });
-
-// Export the app for Vercel
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => {
+        App.listen(2000, () => {
+            console.log("Database connected and server is running on port 2000");
+        });
+    })
+    .catch((error) => {
+        console.error("Database'connection error:", error);
+    });
 
 // Global error handler
 App.use((err, req, res, next) => {
